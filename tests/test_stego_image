@@ -1,0 +1,13 @@
+from PIL import Image, ImageChops, ImageEnhance
+from pathlib import Path
+out = Path("outputs/debug_diffs"); out.mkdir(exist_ok=True)
+cov_dir = Path("data/cover"); stego_dir = Path("outputs/stego")
+pairs = list(zip(sorted(cov_dir.glob("*.*")), sorted(stego_dir.glob("*.*"))))[:8]
+for i,(c,s) in enumerate(pairs,1):
+    ic = Image.open(c).convert("RGB")
+    isg = Image.open(s).convert("RGB")
+    diff = ImageChops.difference(ic, isg).convert("L")
+    # enhance difference visibility
+    diff = ImageEnhance.Brightness(diff).enhance(8.0)
+    diff.save(out/f"diff_{i:02d}_{c.stem}.png")
+print("Saved diffs to outputs/debug_diffs")

@@ -1,0 +1,12 @@
+torch
+torchvision
+torchaudio
+opencv-python
+numpy
+pillow
+tqdm
+matplotlib
+pywavelets
+scikit-image
+torchmetrics
+streamlit
